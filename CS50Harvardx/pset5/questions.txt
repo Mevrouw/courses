@@ -1,0 +1,11 @@
+0.  It is an English word that refers to a lung disease that is otherwise known as silicosis. It is the longest word in the English language published in a dictionary, the Oxford English Dictionary.
+1.  getrusage() returns resource usage measures for who b, which can be one of the following: RUSAGE_SELF, RUSAGE_CHILDREN, RUSAGE_THREAD.
+2.  There are 16 members in a variable of type struct rusage.
+3.  Because if we pass 'before' and 'after' by value, we are passing the entire 16 member structs. This takes a lot of time and costs memory. 
+4.  Main iterates over every letter from text (specified in the commandline). If an alphabetical char is found it is stored in the array word (of length LENGHT+1). Once a number or a word longer than LENGTH comes up it is ignored and index set back to 0. If next char is neither alphabetical nor a number we must have found a complete word. The word is then terminated with \0 and the words counter is updated by 1. It is then checked if the word is in the dictionary.
+5.  As we do not know the size of text ahead of time, we cannot uses fscanf. However we do know the maximum size of a word and can easily create one array every word fits in. Also using fgetc allows us to reject invalid words. 
+6.  I don't really understand the qestion.
+7.  I implemented a trie because that seems to be the fastest. Inside each node is a boolean that can confirm the end of an existing dictionary word, and 27 pointers to children nodes.
+8.  Runtime is O(n) where in is the size of the input document. TIME IN load:0.06 / TIME IN check: 0.01 / TIME IN size: 0.00 / TIME IN unload: 0.11/TIME IN TOTAL was 0.11
+9.  I didn't make any changes yet.
+10. In load my code looks at the current letter to decide if the word had ended. It could be improved by looking at the next letter. This would save space, because then it would malloc one node less for every word in the dictionary. I'd have to change load, check and unload a little to accomplish this. 

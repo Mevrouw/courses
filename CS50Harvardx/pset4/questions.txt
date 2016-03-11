@@ -1,0 +1,88 @@
+0.  How many different colors does each format support?
+GIF: 2^8 = 256 colors. 
+JPG: (RGB)(24 bits): 2^24 = 16777216 colors. 
+PNG-8: 2^8 = 256 colors 
+PNG-24: 2^24 = 16777216 colors. 
+BMP: 1-bit: 2 colors/ 2-bit: 4 colors/ 4-bit: 16 colors/ 8-bit: 256 colors/ 16-bit: 65536/ 24-bit: 16777216 colors/ 32-bit: 4294967296. (The most common is the 24 bits per pixel size.)
+
+1.  Which of these formats supports animation?
+GIF suppurts animation.
+
+2.  What’s the difference between lossy and lossless compression?
+With lossless compression, every single bit of data that was originally in the file remains after the file is uncompressed. 
+All of the information is completely restored. Lossy coxxmpression reduces a file by permanently eliminating certain information.
+
+3.  Which of these formats is lossy-compressed?
+JPEG is lossy-compressed.
+
+4.  What happens, technically speaking, when a file is deleted on a FAT file system?
+The system modifies the first character in the file's directory entry, to signal that the file is deleted and the space can be re-used. 
+Also, the system moves all of the file's FAT clusters to the hard drive's list of free clusters.
+
+5.  What can someone like you do to ensure (with high probability) that files you delete cannot be recovered?
+Simply overwriting user data with one or two passes is probably sufficient to render the overwritten information irrecoverable. 
+One could use freely available tools to sanitize a disk. 
+Also one could use encrytion to store files, and make sure the key is securely overwritten when the disk is sold or repurposed.
+
+6.  What’s stdint.h?
+stdint.h is a header file to a library that declares sets of integer types having specified widths.
+
+7.  What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+The point of using fixed width interger types is to enhance the portability of programs. 
+The already available basic integer types were deemed insufficient, because their actual sizes are implementation defined and may vary across different systems.
+
+8.  How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively? (Assume a 32-bit architecture like the CS50 Appliance.)
+BYTE = 1 byte, 
+DWORD = 4 bytes, 
+LONG = 4 bytes, 
+WORD = 2 bytes.
+
+9.  What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? (Leading bytes used to identify file formats (with high probability) are generally called "magic numbers.)"
+The first two bytes of a BMP is a type WORD bfType (specifies the filetype) For Bitmap it must be set to BM. BM in hexadecimal is 424D
+
+10. What’s the difference between bfSize and biSize?
+bfsize = the size, in bytes, of the bitmap file. 
+bisize = the number of bytes required by the structure.
+
+11. What does it mean if biHeight is negative? 
+If biHeight is negative, the bitmap is a top-down DIB and its origin is the upper-left corner.
+(If biHeight is positive, the bitmap is a bottom-up DIB and its origin is the lower-left corner.)
+        
+12. What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)? 
+biBitCount: The number of bits-per-pixel. 
+The biBitCount member of the BITMAPINFOHEADER structure determines the number of bits that define each pixel and the maximum number of colors in the bitmap.
+        
+13. Why might fopen return NULL in copy.c:37? 
+fopen will return NULL if it cannot create the outfile to write to. 
+This may happen if the operating system is out of memory or if we try to open a file in a directory for which we didn't have the proper permissions.
+        
+14. Why is the third argument to fread always 1 in our code?
+Man-page says: size_t fread(void *ptr, size_t size, size_t nmemb,FILE *restrict stream); 
+ptr is the location where the elements will be stored
+size is the size of each element in bytes.
+nmemb is the number of elements to read.
+stream is the stream to read. (The struct.)
+->In our code it is 1 because there is 1 element to read.
+
+15.  What value does copy.c:70 assign padding if bi.biWidth is 3?    
+If the image is 3 pixels wide, each pixel being 3 bytes, padding will be assigned a value of 3, so the total will me 12, a multiple of 4. 
+Math: 
+int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+int padding = (4 - ( 3 * sizeof(RGBTRIPLE)) % 4) % 4;
+int padding = (4 - ( 3 * 3  % 4) % 4;  
+int padding = (4 - ( 9  % 4) % 4; 
+int padding = (4 - ( 1 ) % 4; 
+int padding = ( 3 ) % 4;
+int padding = 3 
+   
+16. What does fseek do?
+int fseek( 	FILE *stream, long offset, int whence); -> The fseek() function sets the file position indicator for the stream pointed to by stream. 
+The new position, measured in bytes, is obtained by adding offset bytes to the position specified by whence. 
+If whence is set to SEEK_SET, SEEK_CUR, or SEEK_END, the offset is relative to the start of the file, the current position indicator, or end-of-file, respectively. 
+A successful call to the fseek() function clears the end-of-file indicator for the stream and undoes any effects of the ungetc(3) function on the same stream.
+
+17. What is SEEK_CUR?
+If whence is set to SEEK_CUR, the offset is relative to the current position indicator. 
+ 
+18. Whodunit?
+Rob Bowden dun it.
